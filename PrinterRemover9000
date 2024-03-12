@@ -1,0 +1,11 @@
+$printerIPAddress = "10.10.0.180"
+$printer = Get-WmiObject -Query "SELECT * FROM Win32_Printer WHERE PortName LIKE '%$printerIPAddress%'"
+
+# Check if the printer object exists
+if ($printer -ne $null) {
+    # Remove the printer
+    $printer.Delete()
+    Write-Host "Printer at $printerIPAddress removed successfully."
+} else {
+    Write-Host "Printer at $printerIPAddress not found."
+}
