@@ -1,11 +1,14 @@
-$printerIPAddress = "10.10.0.180"
-$printer = Get-WmiObject -Query "SELECT * FROM Win32_Printer WHERE PortName LIKE '%$printerIPAddress%'"
+# Define the IP address of the printer port you want to remove
+$portIPAddress = "10.8.5.114"
 
-# Check if the printer object exists
-if ($printer -ne $null) {
-    # Remove the printer
-    $printer.Delete()
-    Write-Host "Printer at $printerIPAddress removed successfully."
+# Get the printer port object using the IP address
+$port = Get-WmiObject -Query "SELECT * FROM Win32_TCPIPPrinterPort WHERE HostAddress = '$portIPAddress'"
+
+# Check if the printer port object exists
+if ($port -ne $null) {
+    # Remove the printer port
+    $port.Delete()
+    Write-Host "Printer port $portIPAddress removed successfully."
 } else {
-    Write-Host "Printer at $printerIPAddress not found."
+    Write-Host "Printer port $portIPAddress not found."
 }
